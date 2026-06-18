@@ -1,0 +1,44 @@
+name: Python CI Pipeline
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  dev:
+    name: Development Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run dev.py
+        run: python dev.py
+
+  test:
+    name: Testing Job
+    runs-on: ubuntu-latest
+    needs: dev
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run test.py
+        run: python test.py
+
+  prod:
+    name: Production Job
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run prod.py
+        run: python prod.py
