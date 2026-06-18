@@ -4,34 +4,33 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
-  dev:
+  test1:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python dev.py
+      - run: python test1.py
 
-  test:
-    needs: dev
+  test2:
+    needs: test1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python test.py
+      - run: python test2.py
 
-  prod:
-    needs: test
+  test3:
+    needs: test2
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: python prod.py
+      - run: python test3.py
